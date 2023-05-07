@@ -1,0 +1,163 @@
+#include<stdio.h>
+#include<iostream>
+#include<math.h>
+
+using namespace std;
+
+class base {
+protected:
+	double number=0;
+public:
+	virtual void count(double t1, double t2) {};
+	virtual void display() {
+		cout << number << endl;
+	}
+};
+
+class add: virtual public base{
+public:
+	void count(double t1, double t2) {
+		number = t1+t2;
+	}
+};
+
+class minu: virtual public base {
+public:
+	void count(double t1, double t2) {
+		number = t1 - t2;
+	}
+};
+
+class multiply : virtual public base {
+public:
+	void count(double t1, double t2) {
+		number = t1 * t2;
+	}
+};
+
+class divide : virtual public base {
+public:
+	void count(double t1, double t2) {
+		number = t1 / t2;
+	}
+};
+
+class square : virtual public base {
+public:
+	void count(double t1, double t2) {
+		number = t1 * t1;
+	}
+};
+
+class EOAR : virtual public base {
+public:
+	void count(double t1, double t2) {
+		number=sqrt(t1);
+	}
+};
+
+class trigonometric : virtual public base {
+public:
+	void count(double t1, double t2) {
+		number = t1;
+		cout << "1.sin\n2.cos\n3.tan\n请输入所选编号" << endl;
+		int ju = 0;
+		cin >> ju;
+		if (ju == 1) {
+			number = sin(number);
+		}
+		else if (ju == 2) {
+			number = cos(number);
+		}
+		else {
+			number = tan(number);
+		}
+	}
+};
+
+class system1 {
+public:
+	void count() {
+		int n, radix,i=0;
+		char x[10000] = { 0 };
+		cout << "请输入进行进制转换的数值及其转换后进制数" << endl;
+		cin >> n >> radix;
+		do {
+			int t = n % radix;
+			if (t >= 0 && t <= 9)	x[i] = t + '0';
+			else x[i] = t - 10 + 'a';
+			n /= radix;
+			i++;
+		} while (n != 0);
+		for (int p = i - 1; p >= 0; p--) {
+			cout << x[p] << endl;
+		}
+	}
+};
+
+void fun(base& p, double t1,double t2) {
+	p.count(t1,t2);
+	p.display();
+}
+
+int main() {
+	cout << "1.加法\n2.减法\n3.乘法\n4.除法\n5.平方\n6.开方\n7.三角函数\n8.进制转换\n请输入要进行的操作序号" << endl;
+	int judge = 0;
+	cin >> judge;
+	if (judge == 1) {
+		add p;
+		double n1, n2;
+		cout << "请输入进行加法的数值" << endl;
+		cin >> n1 >> n2;
+		fun(p, n1, n2);
+	}
+	else if (judge == 2) {
+		minu p;
+		double n1, n2;
+		cout << "请输入进行减法的数值" << endl;
+		cin >> n1 >> n2;
+		fun(p, n1, n2);
+	}
+	else if (judge == 3) {
+		multiply p;
+		double n1, n2;
+		cout << "请输入进行乘法的数值" << endl;
+		cin >> n1 >> n2;
+		fun(p, n1, n2);
+	}
+	else if (judge == 4) {
+		divide p;
+		double n1, n2;
+		cout << "请输入进行除法的数值" << endl;
+		cin >> n1 >> n2;
+		fun(p, n1, n2);
+	}
+	else if (judge == 5) {
+		square p;
+		double n;
+		cout << "请输入进行平方的数值" << endl;
+		cin >> n;
+		fun(p, n, 1);
+	}
+	else if (judge == 6) {
+		EOAR p;
+		double n;
+		cout << "请输入进行开方的数值" << endl;
+		cin >> n;
+		fun(p, n, 1);
+	}
+	else if (judge == 7) {
+		trigonometric p;
+		double n;
+		cout << "请输入进行三角函数运行的数值" << endl;
+		cin >> n;
+		fun(p, n, 1);
+	}
+	else {
+		system1 p;
+		p.count();
+	}
+	cout << "按“任意键+回车”结束本次运算" << endl;
+	cin >> judge;
+	return 0;
+}
